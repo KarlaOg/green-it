@@ -2,29 +2,44 @@ import React, {useState} from 'react'
 
 
 function SearchBar(props) {
+
     const [searchInput, setSearchInput] = useState("");
 
-    const data_city = "../../../backend/data.json"
 
     const handleChange = (e) => {
         e.preventDefault();
         setSearchInput(e.target.value);
+        console.log(e)
     };
-    if (searchInput.length > 0) {
-        data_city.filter((value_city) => {
-        return value_city.Libcom.match(searchInput);
-    });
+
+    const getInfos = () => {
+      if (searchInput.length > 0) {
+        fetch(`http://127.0.0.1:3000/city?q=${searchInput}`, {
+          method:"GET"
+        })
+        .then(response => console.log(response.json()))
+        // .then(response => console.log(response.body))
+      }
+  
     }
+    
+
 
   return(
   <div id="search-div"> 
 
     <input
+      onChange={handleChange}
        type="search"
        placeholder="Cherchez ici"
-       onChange={handleChange}
        value={searchInput} />
-    <table>
+
+
+
+       <button  onClick={getInfos} type='submit'>
+       Rechercher
+       </button>
+{/*     <table>
       <tr>
         <th>Commune</th>
         <th>Score global</th>  
@@ -37,7 +52,7 @@ function SearchBar(props) {
       </tr>
     </div>
     ))}
-    </table>
+    </table> */}
     </div>
    );
 }
