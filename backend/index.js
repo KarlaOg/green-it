@@ -13,33 +13,30 @@ const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const dbName = 'green-it';
 
-let db
-// const foo = async () => {
-//   const result =  await db.collection("data").createIndex({Libcom:1, Libdep:1 , Libreg:1}); 
-//   console.log(`Index created: ${result}`);
-// } 
+let db;
 
 MongoClient.connect(url, function (err, client) {
   console.log("Connected successfully to server");
   db = client.db(dbName);
-  // foo(); 
 });
 
 
-app.get('/',  (req, res )  =>  {
-  console.log(req.query.city); 
-  const city =  db.collection("data").find( {Libcom : req.query.city} )
-  res.send(city)
-  // console.log(city)
- 
+app.get('/', (req, res) => {
+  db.collection("data").find({}).toArray(function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+
+      res.send(JSON.stringify(result));
+    }
+  })
 });
 
- 
 
 
-  
+
+
 // Connection URL
-
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
