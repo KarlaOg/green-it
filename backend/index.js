@@ -9,8 +9,7 @@ const app = express();
 var cors = require('cors')
 app.use(cors())
 
-const MongoClient = require('mongodb').MongoClient
-, assert = require('assert');
+const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const dbName = 'green-it';
 
@@ -21,15 +20,17 @@ let db
 // } 
 
 MongoClient.connect(url, function (err, client) {
-  assert.equal(null, err);
   console.log("Connected successfully to server");
   db = client.db(dbName);
+  // foo(); 
 });
 
 
-app.get('/', async (req, res )  =>  {
-  const city =  await db.collection("data").find( {$text: { $search: req.query.city} })
-  res.render("res")
+app.get('/',  (req, res )  =>  {
+  console.log(req.query.city); 
+  const city =  db.collection("data").find( {Libcom : req.query.city} )
+  res.send(city)
+  // console.log(city)
  
 });
 
