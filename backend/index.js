@@ -9,31 +9,40 @@ const app = express();
 var cors = require('cors')
 app.use(cors())
 
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
-const dbName = 'green-it';
-
-let db;
-
-MongoClient.connect(url, function (err, client) {
-  console.log("Connected successfully to server");
-  db = client.db(dbName);
-});
 
 
-app.get('/', (req, res) => {
-  db.collection("data").find({}).toArray(function (err, result) {
-    if (err) {
-      res.send(err);
-    } else {
+// app.get('/', (req, res) => {
+//   db.collection("data").find({}).toArray(function (err, result) {
+//     if (err) {
+//       res.send(err);
+//     } else {
 
-      res.send(JSON.stringify(result));
-    }
-  })
-});
+//       res.send(JSON.stringify(result));
+//     }
+//   })
+// });
+
+
+const { MongoClient } = require('mongodb');
+const connection = "mongodb://localhost:27017";
+const client = new MongoClient(connection);
 
 
 
+app.get('/city', (req, res) => {
+ 
+  const co = client.connect();
+  const db = client.db("green-it");
+  const testCollection = db.collection("data"); 
+  // const indexResult =  testCollection.createIndex({ Libcom: 'text', Libreg: 'text', Libdeg: 'text' })
+  // console.log(indexResult)
+  const query = { $text: { $search:req.query.q } };
+    const projection = { Libcom: 1};
+    const cursor = testCollection
+      .find(query)
+      .project(projection);
+    cursor.forEach(console.dir);
+})
 
 
 // Connection URL
