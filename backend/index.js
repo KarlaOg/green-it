@@ -37,11 +37,14 @@ app.get('/city', (req, res) => {
   // const indexResult =  testCollection.createIndex({ Libcom: 'text', Libreg: 'text', Libdeg: 'text' })
   // console.log(indexResult)
   const query = { $text: { $search:req.query.q } };
-    const projection = { Libcom: 1};
+    const projection = { Libcom: 1, Libreg :1 , Libdep:1 , };
     const cursor = testCollection
       .find(query)
-      .project(projection);
-    cursor.forEach(console.dir);
+      .project(projection)
+      cursor.forEach(item => res.send(item))
+
+      
+    
 })
 
 
