@@ -1,0 +1,31 @@
+version: '3.4'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+  server:
+    build: ./backend/
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/home/node/app
+    environment:
+      PORT: 8000
+      MONGO_URL: 'mongodb://root:password@mongo:27017/app'
+    depends_on:
+      - mongo
+
+  client:
+    image: node:alpine3.10
+    ports:
+      - 3000:3000
+    volumes:
+      - ./front-react:/home/react/app
+    working_dir: /home/react/app
+    command: sh -c "npm install --no-update-notifier; npm start --no-update-notifier"
+volumes:
+  db-data: {}
