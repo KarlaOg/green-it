@@ -1,5 +1,5 @@
 import './App.css';
-import SearchBar from './Components/Search';
+import SearchBar from './Components/search';
 import Header from './Components/Header/Header';
 
 function App() {
