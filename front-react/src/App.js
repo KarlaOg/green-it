@@ -1,10 +1,6 @@
-import search from './search.svg';
 import './App.css';
-import SearchBar from './Components/search'
-import { useEffect, useState } from 'react';
-import { SpinnerCircular } from 'spinners-react';
-
-
+import SearchBar from './Components/Search';
+import Header from './Components/Header';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -33,6 +29,7 @@ const cacheImages = async (srcArray) => {
 };
 
   return (
+<<<<<<< HEAD
     <div className="App">
       <header className="App-header">
         {isLoading
@@ -45,6 +42,11 @@ const cacheImages = async (srcArray) => {
           <p>Cherchez votre commune:</p>
           <SearchBar/>
       </header>
+=======
+    <div className='App'>
+      <Header />
+      <SearchBar />
+>>>>>>> ad1918e (wip)
     </div>
   );
 }

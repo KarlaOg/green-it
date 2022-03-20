@@ -3,8 +3,8 @@
 const express = require('express');
 
 // Constants
-const PORT = 27017;
-const HOST = 'localhost';
+const PORT = 3001;
+const HOST = '127.0.0.1';
 const app = express();
 var cors = require('cors');
 app.use(cors());
